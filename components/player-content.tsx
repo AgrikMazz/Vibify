@@ -68,7 +68,7 @@ const PlayerContent: React.FC<PlayerContentProps>= ({
             format: ['mp3']
         }
     );
-
+/*
     useEffect(() => {
         sound?.play();
 
@@ -84,7 +84,7 @@ const PlayerContent: React.FC<PlayerContentProps>= ({
             pause();
         }
     }
-
+*/
     const toggleMute = () => {
         if(volume === 0) {
             setVolume(1);
@@ -94,37 +94,24 @@ const PlayerContent: React.FC<PlayerContentProps>= ({
     }
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 h-full">
+        <div className="flex h-full">
             <div className="flex w-full justify-start">
                 <div className="flex items-center gap-x-4">
                     <MediaItem data={song} onClick={() => {}}/>
                     <LikeButton songId={song.id} />
                 </div>
             </div>
-            <div className="flex md:hidden col-auto w-full justify-end items-center">
-                <div onClick={handlePlay} className="rounded-full items-center justify-center bg-white p-1 cursor-pointer">
-                    <Icon size={25} className="text-black" />
+            <div className="flex md:hidden w-full justify-end items-center ml-4">
+                <div>
+                    <audio className=" bg-purple-400 rounded-full" src={songUrl} onEnded={onPlayerNext} controls onPlay={() => setIsPlaying(true)}></audio>
                 </div>
             </div>
-            <div className="hidden md:flex items-center max-w-2xl justify-center h-full w-full gap-x-6">
-                <AiFillStepBackward onClick={onPlayerPrevious} className="text-neutral-400 hover:text-white cursor-pointer transition" />
-                <div onClick={handlePlay} className="hidden md:flex rounded-full items-center justify-center gap-x-6 bg-white p-1 cursor-pointer hover:opacity-80 transition">
-                    <Icon size={25} className="text-black" />
-                </div>
-                <AiFillStepForward onClick={onPlayerNext} className="text-neutral-400 hover:text-white cursor-pointer transition" />
+            <div className="hidden md:flex">
+                <audio className=" bg-purple-400 rounded-full" src={songUrl} onEnded={onPlayerNext} controls autoPlay onPlay={() => setIsPlaying(true)}></audio>
             </div>
-            <div className="hidden md:flex w-full justify-end pr-2">
-                <div className="flex items-center gap-x-2">
-                    <VolumeIcon
-                        onClick={toggleMute}
-                        className="cursor-pointer"
-                        size={35}
-                    />
-                    <Slider
-                        value={volume}
-                        onChange={(value) => setVolume(value)}
-                    />
-                </div>
+            <div className="hidden md:flex items-center max-w-2xl justify-end h-full w-full gap-x-4">
+                <AiFillStepBackward onClick={onPlayerPrevious} className="text-neutral-400 hover:text-white hover:scale-105 h-5 w-5 cursor-pointer transition" />
+                <AiFillStepForward onClick={onPlayerNext} className="text-neutral-400 hover:text-white hover:scale-105 h-5 w-5 cursor-pointer transition mr-6" />
             </div>
         </div>
     );
